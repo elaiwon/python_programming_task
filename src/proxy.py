@@ -2,10 +2,10 @@ import http.server
 import socketserver
 import signal
 import sys
-import server
 import os
+import server
 
-PORT = os.environ.get("HTTP_PORT") or 8000
+PORT = int(os.environ.get("HTTP_PORT")) if os.environ.get("HTTP_PORT") else 8000
 
 with socketserver.TCPServer(("", PORT), server.ProxyServer) as httpd:
     print("Serving at port", PORT)

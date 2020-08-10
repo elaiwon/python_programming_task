@@ -4,11 +4,11 @@ import requests
 import jwt
 import secrets
 import datetime
+import os
 
-POSTMAN_URL = "https://postman-echo.com/post"
-USERNAME = "user"
-# This secret should have 32 bytes!!!!!!!!!!
-SECRET = "a9ddbcaba8c0ac1a0a812dc0c2f08514b23f2db0a68343cb8199ebb38a6d91e4ebfb378e22ad39c2d01"
+ENDPOINT_URL = os.environ.get("ENDPOINT_URL")
+USERNAME = os.environ.get("USERNAME")
+SECRET = os.environ.get("SECRET")
 
 class ProxyServer(http.server.BaseHTTPRequestHandler):
     # Time the server was started
@@ -35,7 +35,7 @@ class ProxyServer(http.server.BaseHTTPRequestHandler):
         request_body = self.rfile.read(int(self.headers['Content-Length']))
         self.headers["x-my-jwt"] = jwt.encode(claims, SECRET)
 
-        r = requests.post(POSTMAN_URL, headers = self.headers, data = request_body)
+        r = requests.post(ENDPOINT_URL, headers = self.headers, data = request_body)
 
         self.send_response(r.status_code)
         [self.send_header(key, r.headers[key]) for key in r.headers]

@@ -1,0 +1,13 @@
+version: "3.7"
+services:
+  server:
+    build: ./
+    restart: always
+    ports:
+      - 8000:8000
+    environment:
+      - HTTP_PORT=8000
+      - ENDPOINT_URL=https://postman-echo.com/post
+      - USERNAME=user
+      # This secret is wrong!!!! It should be 256 bits long
+      - SECRET=a9ddbcaba8c0ac1a0a812dc0c2f08514b23f2db0a68343cb8199ebb38a6d91e4ebfb378e22ad39c2d01
